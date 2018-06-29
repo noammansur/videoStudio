@@ -7,7 +7,7 @@ function [OutForegroundMask] = isolatePerson(InForegroundMask,Width,Height)
     sigma = 24;
     % Apply Median filter to remove Noise
     % The filter is vertical like the person
-    InForegroundMask=medfilt2(InForegroundMask,[6 3]);
+    InForegroundMask=medfilt2(InForegroundMask,[30 1]);
     labeledImage = bwlabel(InForegroundMask);
     measurements = regionprops(labeledImage, 'Area');
     allAreas = [measurements.Area];
@@ -35,12 +35,9 @@ function [OutForegroundMask] = isolatePerson(InForegroundMask,Width,Height)
             InForegroundMask(:,:) = 0;
         else
             %Apply Median filter to remove Noise
-            InForegroundMask=medfilt2(InForegroundMask,[22 10]);
+            InForegroundMask=medfilt2(InForegroundMask,[16 10]);
             % remove connected objects smaller than given argument
             InForegroundMask = bwareaopen(InForegroundMask, ceil(area/2));
-            % Gaussian filter used to smooth binary output:
-            filter = fspecial('gaussian',sigma);
-            InForegroundMask = imfilter(InForegroundMask,filter); 
         end
     end
     OutForegroundMask = InForegroundMask;

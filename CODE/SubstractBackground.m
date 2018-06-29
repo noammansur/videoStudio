@@ -54,10 +54,10 @@ BackgroundPerFrame = movmedian(InputInGray, WindowSize);
 
 disp(strcat('Finished calculating background'));
 
-edges = round(WindowSize/6);
+edges = round(WindowSize/3.5);
 % Main loop for BG substraction:
 for FrameIdx = 1:NumberOfFrames
-    if (FrameIdx < edges) || (FrameIdx > NumberOfFrames-edges)
+    if (FrameIdx < edges) || (FrameIdx > NumberOfFrames-(2*edges))
         level = 0.04;
     else
         level = BgFgThreshold;
